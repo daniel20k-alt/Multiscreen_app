@@ -23,11 +23,11 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
         navigationItem.rightBarButtonItems = [delete, add]
     }
     
-    @IBAction func adressBar(_ sender: Any) {
-    }
+
+    @IBOutlet var adressBar: UITextField!
     
     @IBOutlet var stackView: UIStackView!
-
+    
     func setDefaultTitle() {
         title = "Multiscreen"
     }
@@ -50,7 +50,24 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
     }
     
     @objc func deleteWebView() {
-        
+        if let webView = activeWebView { //safely unwrapping the webView
+            if let index = stackView.arrangedSubviews.firstIndex(of: webView) {
+                webView.removeFromSuperview() //removing the webView
+                
+                if stackView.arrangedSubviews.count == 0 {
+                    setDefaultTitle() //if no more stacks open - return default page
+                } else {
+                    var currentIndex = Int(index) //converting Index to int
+                    if currentIndex == stackView.arrangedSubviews.count {
+                        currentIndex = stackView.arrangedSubviews.count - 1
+                    } //if that was the last view, go back 1
+                    
+                    if let newSelectedWebView = stackView.arrangedSubviews[currentIndex] as? WKWebView {
+                        selectWebView(newSelectedWebView)
+                    } //finding the webView at the new index and selecting it
+                }
+            }
+        }
     }
     
     func selectWebView(_ webView: WKWebView) {
@@ -59,6 +76,17 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
         }
         activeWebView = webView
         webView.layer.borderWidth = 3
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let webView = activeWebView, let address = adressBar.text {
+            if let url = URL(string: address) {
+                webView.load(URLRequest(url: url))
+            }
+        }
+
+        textField.resignFirstResponder()
+        return true
     }
     
     @objc func webViewTapped(_ recognizer: UITapGestureRecognizer) {
@@ -71,3 +99,4 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
         return true
     }
 }
+

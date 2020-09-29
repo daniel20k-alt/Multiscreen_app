@@ -25,6 +25,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
+                                    <action selector="adresBar:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="Djh-Ns-wcl"/>
                                     <action selector="adressBar:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="GOM-8Q-fDr"/>
                                 </connections>
                             </textField>
@@ -43,7 +44,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="n7l-6n-pIg"/>
                     <connections>
-                        <outlet property="stackView" destination="JbC-NW-Oj9" id="JBP-pb-Z3z"/>
+                        <outlet property="adressBar" destination="QOX-Bn-4U9" id="ixP-Am-re8"/>
+                        <outlet property="stackView" destination="JbC-NW-Oj9" id="HN4-5P-Igh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
