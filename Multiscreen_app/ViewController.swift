@@ -76,6 +76,8 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
         }
         activeWebView = webView
         webView.layer.borderWidth = 3
+        
+        updateUI(for: webView)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -106,5 +108,15 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
             stackView.axis = .horizontal
         }
     }
+    
+    func updateUI(for webView: WKWebView) {
+        title = webView.title
+        adressBar.text = webView.url?.absoluteString ?? ""
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView == activeWebView {
+            updateUI(for: webView)
+        }
+    }
 }
-
