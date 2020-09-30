@@ -14,7 +14,7 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setDefaultTitle()
         
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWebView))
@@ -23,7 +23,7 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
         navigationItem.rightBarButtonItems = [delete, add]
     }
     
-
+    
     @IBOutlet var adressBar: UITextField!
     
     @IBOutlet var stackView: UIStackView!
@@ -84,7 +84,7 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
                 webView.load(URLRequest(url: url))
             }
         }
-
+        
         textField.resignFirstResponder()
         return true
     }
@@ -97,6 +97,14 @@ class ViewController: UIViewController, WKNavigationDelegate, UITextFieldDelegat
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.horizontalSizeClass == .compact {
+            stackView.axis = .vertical
+        } else {
+            stackView.axis = .horizontal
+        }
     }
 }
 
